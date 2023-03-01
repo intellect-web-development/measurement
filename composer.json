@@ -1,0 +1,13 @@
+{
+    "name": "intellect-web-development/measurement",
+    "description": "Package for measurement",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "IntellectWebDevelopment\\Measurement\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
