@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core\Math\Service;
 
 use Generator;
@@ -7,6 +9,7 @@ use IWD\Measurement\Core\Math\Service\Math;
 use IWD\Measurement\Core\Math\ValueObject\Measurement;
 use PHPUnit\Framework\TestCase;
 
+/** @covers \IWD\Measurement\Core\Math\Service\Math */
 class MathTest extends TestCase
 {
     /** @dataProvider sumProvider */
