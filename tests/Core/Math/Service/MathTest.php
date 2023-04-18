@@ -18,7 +18,7 @@ class MathTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: Math::sum(...$terms)->getValue()
+            actual: Math::sum($terms)->getValue()
         );
     }
 
@@ -62,7 +62,7 @@ class MathTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: Math::multiply($multiplicand, ...$subtrahends)->getValue()
+            actual: Math::multiply($multiplicand, $subtrahends)->getValue()
         );
     }
 
@@ -117,7 +117,7 @@ class MathTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: Math::difference($minuend, ...$subtrahends)->getValue()
+            actual: Math::difference($minuend, $subtrahends)->getValue()
         );
     }
 
@@ -166,11 +166,11 @@ class MathTest extends TestCase
         if (null === $expected) {
             self::expectExceptionMessage('Division by zero');
             self::expectException(MeasurementException::class);
-            Math::divide($dividend, ...$dividers);
+            Math::divide($dividend, $dividers);
         } else {
             self::assertSame(
                 expected: $expected->getValue(),
-                actual: Math::divide($dividend, ...$dividers)?->getValue()
+                actual: Math::divide($dividend, $dividers)?->getValue()
             );
         }
     }
@@ -283,7 +283,7 @@ class MathTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: Math::max(...$scope)->getValue()
+            actual: Math::max($scope)->getValue()
         );
     }
 
@@ -312,7 +312,7 @@ class MathTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: Math::min(...$scope)->getValue()
+            actual: Math::min($scope)->getValue()
         );
     }
 
@@ -629,7 +629,7 @@ class MathTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: Math::avg(...$scope)?->getValue()
+            actual: Math::avg($scope)?->getValue()
         );
     }
 
@@ -637,7 +637,7 @@ class MathTest extends TestCase
     {
         self::expectExceptionMessage('Impossible to get average from emptiness');
         self::expectException(MeasurementException::class);
-        self::assertNull(actual: Math::avg());
+        self::assertNull(actual: Math::avg([]));
     }
 
     public function avgProvider(): Generator

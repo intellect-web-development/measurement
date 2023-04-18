@@ -20,7 +20,7 @@ class Exchanger
         }
 
         return new Money(
-            amount: $money->getAmount()->multiply($exchangePrice->getPrice()),
+            amount: $money->getAmount()->multiply([$exchangePrice->getPrice()]),
             currency: $exchangePrice->getCurrencyPair()->getBuyCurrency()
         );
     }

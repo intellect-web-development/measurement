@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace IWD\Measurement\Core\Math\ValueObject;
 
 use IWD\Measurement\Core\Math\Service\Math;
+use IWD\Measurement\Exception\MeasurementException;
 
-// todo: сделать возможность указывать точность для каждой из операций
 /** @phpstan-consistent-constructor */
 class Measurement
 {
@@ -31,45 +31,52 @@ class Measurement
         return $this->value;
     }
 
-    public function sum(Measurement $measurement): static
+    public function sum(Measurement $measurement, ?int $precision = null): static
     {
         return new static(
-            Math::sum($this, $measurement)->getValue(),
+            Math::sum(terms: [$this, $measurement], precision: $precision)->getValue(),
         );
     }
 
-    public function difference(Measurement $measurement): static
+    public function difference(Measurement $measurement, ?int $precision = null): static
     {
         return new static(
-            Math::difference($this, $measurement)->getValue(),
+            Math::difference(minuend: $this, subtrahends: [$measurement], precision: $precision)->getValue(),
         );
     }
 
     public function round(int $precision): static
     {
         return new static(
-            Math::round($this, $precision)->getValue()
+            Math::round(measurement: $this, precision: $precision)->getValue()
         );
     }
 
-    public function multiply(Measurement ...$factors): static
+    /**
+     * @param Measurement[] $factors
+     */
+    public function multiply(array $factors, ?int $precision = null): static
     {
         return new static(
-            Math::multiply($this, ...$factors)->getValue()
+            Math::multiply(multiplicand: $this, factors: $factors, precision: $precision)->getValue()
         );
     }
 
-    public function divide(Measurement ...$dividers): static
+    /**
+     * @param Measurement[] $dividers
+     * @throws MeasurementException
+     */
+    public function divide(array $dividers, ?int $precision = null): static
     {
         return new static(
-            Math::divide($this, ...$dividers)->getValue()
+            Math::divide(dividend: $this, dividers: $dividers, precision: $precision)->getValue()
         );
     }
 
     public function sqrt(int $precision): static
     {
         return new static(
-            Math::sqrt($this, $precision)->getValue()
+            Math::sqrt(measurement: $this, precision: $precision)->getValue()
         );
     }
 

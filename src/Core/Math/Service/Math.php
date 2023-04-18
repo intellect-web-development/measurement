@@ -10,14 +10,17 @@ use IWD\Measurement\Exception\MeasurementException;
 
 class Math
 {
-    public static function sum(Measurement ...$terms): Measurement
+    /**
+     * @param Measurement[] $terms
+     */
+    public static function sum(array $terms, ?int $precision = null): Measurement
     {
         $result = '0';
         foreach ($terms as $term) {
             $result = bcadd(
                 $result,
                 $term->getValue(),
-                self::getMaxScale($result, $term->getValue())
+                null !== $precision ? $precision : self::getMaxScale($result, $term->getValue())
             );
         }
 
@@ -25,10 +28,10 @@ class Math
     }
 
     /**
-     * @param Measurement $minuend        Уменьшаемое
-     * @param Measurement ...$subtrahends Вычитаемое
+     * @param Measurement $minuend       Уменьшаемое
+     * @param Measurement[] $subtrahends Вычитаемое
      */
-    public static function difference(Measurement $minuend, Measurement ...$subtrahends): Measurement
+    public static function difference(Measurement $minuend, array $subtrahends, ?int $precision = null): Measurement
     {
         $result = $minuend->getValue();
 
@@ -36,7 +39,7 @@ class Math
             $result = bcsub(
                 $result,
                 $subtrahend->getValue(),
-                self::getMaxScale($result, $subtrahend->getValue())
+                null !== $precision ? $precision : self::getMaxScale($result, $subtrahend->getValue())
             );
         }
 
@@ -45,9 +48,9 @@ class Math
 
     /**
      * @param Measurement $multiplicand Множимое
-     * @param Measurement ...$factors   Множители
+     * @param Measurement[] $factors    Множители
      */
-    public static function multiply(Measurement $multiplicand, Measurement ...$factors): Measurement
+    public static function multiply(Measurement $multiplicand, array $factors, ?int $precision = null): Measurement
     {
         $result = $multiplicand->getValue();
 
@@ -55,7 +58,7 @@ class Math
             $result = bcmul(
                 $result,
                 $factor->getValue(),
-                self::getMaxScale($result, $factor->getValue())
+                null !== $precision ? $precision : self::getMaxScale($result, $factor->getValue())
             );
         }
 
@@ -77,11 +80,11 @@ class Math
     }
 
     /**
-     * @param Measurement $dividend Делимое
-     * @param Measurement ...$dividers Делитель
+     * @param Measurement $dividend   Делимое
+     * @param Measurement[] $dividers Делитель
      * @throws MeasurementException
      */
-    public static function divide(Measurement $dividend, Measurement ...$dividers): Measurement
+    public static function divide(Measurement $dividend, array $dividers, ?int $precision = null): Measurement
     {
         $result = $dividend->getValue();
 
@@ -90,7 +93,7 @@ class Math
                 $result = bcdiv(
                     $result,
                     $divider->getValue(),
-                    self::getMaxScale($result, $divider->getValue())
+                    null !== $precision ? $precision : self::getMaxScale($result, $divider->getValue())
                 );
             }
         } catch (DivisionByZeroError $exception) {
@@ -105,7 +108,10 @@ class Math
         return new Measurement(ltrim($measurement->getValue(), '-'));
     }
 
-    public static function max(Measurement ...$measurements): Measurement
+    /**
+     * @param Measurement[] $measurements
+     */
+    public static function max(array $measurements): Measurement
     {
         $values = [];
         foreach ($measurements as $measurement) {
@@ -117,7 +123,10 @@ class Math
         return new Measurement(!empty($max) ? $max : 0);
     }
 
-    public static function min(Measurement ...$measurements): Measurement
+    /**
+     * @param Measurement[] $measurements
+     */
+    public static function min(array $measurements): Measurement
     {
         $values = [];
         foreach ($measurements as $measurement) {
@@ -129,7 +138,11 @@ class Math
         return new Measurement(!empty($min) ? $min : 0);
     }
 
-    public static function avg(Measurement ...$measurements): Measurement
+    /**
+     * @param Measurement[] $measurements
+     * @throws MeasurementException
+     */
+    public static function avg(array $measurements): Measurement
     {
         $values = [];
         foreach ($measurements as $measurement) {
@@ -141,7 +154,7 @@ class Math
 
         return self::divide(
             new Measurement((string) array_sum($values)),
-            new Measurement((string) count($values)),
+            [new Measurement((string) count($values))]
         );
     }
 

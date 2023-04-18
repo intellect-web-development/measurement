@@ -68,7 +68,7 @@ class MeasurementTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: $actual->multiply(...$factors)->getValue()
+            actual: $actual->multiply($factors)->getValue()
         );
     }
 
@@ -90,7 +90,7 @@ class MeasurementTest extends TestCase
     {
         self::assertSame(
             expected: $expected->getValue(),
-            actual: $actual->divide(...$dividers)?->getValue()
+            actual: $actual->divide($dividers)?->getValue()
         );
     }
 
