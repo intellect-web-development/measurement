@@ -59,13 +59,11 @@ class Measurement
         );
     }
 
-    public function divide(Measurement ...$dividers): ?static
+    public function divide(Measurement ...$dividers): static
     {
-        $result = Math::divide($this, ...$dividers);
-
-        return null !== $result
-            ? new static($result->getValue())
-            : null;
+        return new static(
+            Math::divide($this, ...$dividers)->getValue()
+        );
     }
 
     public function sqrt(int $precision): static

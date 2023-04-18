@@ -6,6 +6,7 @@ namespace IWD\Measurement\Core\Math\Service;
 
 use DivisionByZeroError;
 use IWD\Measurement\Core\Math\ValueObject\Measurement;
+use IWD\Measurement\Exception\MeasurementException;
 
 class Math
 {
@@ -76,10 +77,11 @@ class Math
     }
 
     /**
-     * @param Measurement $dividend    Делимое
+     * @param Measurement $dividend Делимое
      * @param Measurement ...$dividers Делитель
+     * @throws MeasurementException
      */
-    public static function divide(Measurement $dividend, Measurement ...$dividers): ?Measurement
+    public static function divide(Measurement $dividend, Measurement ...$dividers): Measurement
     {
         $result = $dividend->getValue();
 
@@ -92,7 +94,7 @@ class Math
                 );
             }
         } catch (DivisionByZeroError $exception) {
-            return null;
+            throw new MeasurementException('Division by zero');
         }
 
         return new Measurement($result);
@@ -127,14 +129,14 @@ class Math
         return new Measurement(!empty($min) ? $min : 0);
     }
 
-    public static function avg(Measurement ...$measurements): ?Measurement
+    public static function avg(Measurement ...$measurements): Measurement
     {
         $values = [];
         foreach ($measurements as $measurement) {
             $values[] = $measurement->getValue();
         }
         if (empty($values)) {
-            return null;
+            throw new MeasurementException('Impossible to get average from emptiness');
         }
 
         return self::divide(

@@ -7,6 +7,7 @@ namespace Core\Math\Service;
 use Generator;
 use IWD\Measurement\Core\Math\Service\Math;
 use IWD\Measurement\Core\Math\ValueObject\Measurement;
+use IWD\Measurement\Exception\MeasurementException;
 use PHPUnit\Framework\TestCase;
 
 /** @covers \IWD\Measurement\Core\Math\Service\Math */
@@ -163,7 +164,9 @@ class MathTest extends TestCase
     public function testDivide(Measurement $dividend, array $dividers, ?Measurement $expected, int $precision = 0): void
     {
         if (null === $expected) {
-            self::assertNull(Math::divide($dividend, ...$dividers));
+            self::expectExceptionMessage('Division by zero');
+            self::expectException(MeasurementException::class);
+            Math::divide($dividend, ...$dividers);
         } else {
             self::assertSame(
                 expected: $expected->getValue(),
@@ -632,9 +635,9 @@ class MathTest extends TestCase
 
     public function testAvgThenEmpty(): void
     {
-        self::assertNull(
-            actual: Math::avg()
-        );
+        self::expectExceptionMessage('Impossible to get average from emptiness');
+        self::expectException(MeasurementException::class);
+        self::assertNull(actual: Math::avg());
     }
 
     public function avgProvider(): Generator
