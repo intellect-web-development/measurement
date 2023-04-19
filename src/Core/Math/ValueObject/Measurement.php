@@ -31,6 +31,20 @@ class Measurement
         return $this->value;
     }
 
+    public function increment(): static
+    {
+        return new static(
+            Math::sum(terms: [$this, new Measurement(1)])->getValue(),
+        );
+    }
+
+    public function decrement(): static
+    {
+        return new static(
+            Math::difference(minuend: $this, subtrahends:[new Measurement(1)])->getValue(),
+        );
+    }
+
     public function sum(Measurement $measurement, ?int $precision = null): static
     {
         return new static(
