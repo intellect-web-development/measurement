@@ -31,6 +31,21 @@ class Measurement
         return $this->value;
     }
 
+    public function toInteger(int $precision): int
+    {
+        return (int) $this->value;
+    }
+
+    public function toFloat(int $precision): float
+    {
+        return (float) $this->value;
+    }
+
+    public function toStringInteger(int $precision): string
+    {
+        return (string) (int) $this->value;
+    }
+
     public function increment(): static
     {
         return new static(
