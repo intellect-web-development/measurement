@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Math\ValueObject;
+namespace IWD\Measurement\Tests\Core\Math\ValueObject;
 
 use Generator;
 use IWD\Measurement\Core\Math\ValueObject\Measurement;

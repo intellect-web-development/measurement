@@ -8,6 +8,11 @@
             "IWD\\Measurement\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "IWD\\Measurement\\Tests\\": "tests/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {
         "php": ">=8.1",

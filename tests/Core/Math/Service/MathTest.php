@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Math\Service;
+namespace IWD\Measurement\Tests\Core\Math\Service;
 
 use Generator;
 use IWD\Measurement\Core\Math\Service\Math;

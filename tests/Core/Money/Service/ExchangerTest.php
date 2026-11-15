@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Money\Service;
+namespace IWD\Measurement\Tests\Core\Money\Service;
 
 use Generator;
 use IWD\Measurement\Core\Math\ValueObject\Measurement;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Money\ValueObject;
+namespace IWD\Measurement\Tests\Core\Money\ValueObject;
 
 use IWD\Measurement\Core\Math\ValueObject\Measurement;
 use IWD\Measurement\Core\Money\ValueObject\Currency;
